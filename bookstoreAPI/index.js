@@ -17,6 +17,17 @@ app.get("/livres", (req, res) => {
     res.json(books);
 });
 
+app.post("/livres", (req, res) =>{
+    const livre = req.body;
+
+    if (!livre){
+        return res.status(404).json({ error : "Le livre n'est pas connu."});
+    }
+
+    books.push(livre);
+    res.status(201).json();
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 }); 

@@ -36,6 +36,19 @@ app.post("/notes", (req, res) => {
     res.status(201).json(newNote);
 });
 
+app.delete("/notes/:id",(req, res) =>{
+    const id = parseInt(req.params.id);
+
+    const noteIndex = notes.findIndex(note => note.id === id);
+
+    if (noteIndex === -1) {
+        return res.status(404).json({ error : "Note not found."});
+    }
+
+    const deletedNote = notes.splice(noteIndex, 1)[0];
+    res.json({ message : "Note deleted successfully", note : deletedNote});
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 }); 

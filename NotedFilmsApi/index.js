@@ -34,7 +34,7 @@ app.post("/films", (req, res) =>{
 
     films.push(newFilm);
     res.status(201).json(newFilm);
-})
+});
 
 app.listen(PORT, ()=>{
     console.log(`🚀 Server running at http://localhost:${PORT}`);

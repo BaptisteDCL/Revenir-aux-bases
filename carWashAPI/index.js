@@ -8,13 +8,13 @@ app.use(cors());
 app.use(express.json());
 
 let listeDeVoitures = [];
-let nextVoitureId = -1;
+let nextVoitureId = 1;
 
 app.get("/", (req, res) => {
     res.json("Bienvenue sur ma page");
 });
 
-app.post("/", (req, res) => {
+app.post("/voitures", (req, res) => {
     const { name, engine } = req.body;
 
     if (!name, !engine){
@@ -30,6 +30,10 @@ app.post("/", (req, res) => {
 
     listeDeVoitures.push(newCar);
     res.status(201).json(newCar);
+});
+
+app.get("/voitures", (req, res) =>{
+    res.json(listeDeVoitures);
 });
 
 app.listen(PORT, () => {

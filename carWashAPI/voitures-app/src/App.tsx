@@ -4,8 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-
-  return <h1 className="text-3xl font-bold text-center mt-10">Hello Tailwind !</h1>;
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <h1>WashMyCar</h1>
+      <p>Votre voiture, plus porpre que jamais</p>
+      <button>Voir nos voitures</button>
+    </div>
+  );
 }
 
 export default App

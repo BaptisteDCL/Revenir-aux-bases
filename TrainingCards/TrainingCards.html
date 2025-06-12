@@ -3,6 +3,50 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Cards</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+        }
+        h1 {
+            color: #38bdf8;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 20px;
+        }
+        .card {
+            background: #1e293b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);
+            width: 250px;
+        }
+        .form-group{
+            margin-bottom: 10px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #38bdf8;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover{
+            background : #0ea5e9;
+        }
+    </style>
     </head>
     <body>
         <h1>Create training Cards</h1>
@@ -18,5 +62,28 @@
             <button onclick="addCard()">Add Card</button>
         </div>
         <div class="card-container" id="cardContainer"></div>
+        <script>
+            function addCard() {
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+
+                if (!title || !description) {
+                    alert("Please fill in both fields.");
+                    return;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                <h3>${title}</h3>
+                <p>${description}</p>
+                `;
+
+                document.getElementById('cardContainer').appendChild(card);
+
+                document.getElementById('title').value = '';
+                document.getElementById('description').value = '';
+            }
+        </script>
     </body>
 </html>

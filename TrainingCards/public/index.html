@@ -89,33 +89,66 @@
         <div class="card-container" id="cardContainer"></div>
 
         <script>
-            function addCard() {
-                const title = document.getElementById('title').value;
-                const description = document.getElementById('description').value;
+            const API_URL = 'http://localhost:3000/api/cards'; // adresse
+            let cards = [];
 
-                if (!title || !description) {
+            function renderCards() {
+                const container = document.getElementById('cardContainer'); // Récupération de l'objet à cette adresse
+                container.innerHTML = ''; // Passage à vide
+
+                cards.forEach((card, index) => { // Pour chaque carte
+                    const cardEl = document.createElement('div'); // Création d'un div
+                    cardEl.className = 'card'; // Ajout du nom de class card
+                    cardEl.innerHTML = `
+                        <h3>${card.title}</h3>
+                        <p>${card.description}</p>
+                    `; // Ajout dans l'HTML du div les données venant de la nouvelle carte
+
+                const deleteButton = document.createElement('button'); // Ajout d'un bouton de supression
+                deleteButton.textContent = "X"; // Modification du contenu du boutton
+                deleteButton.className = 'delete-btn'; // Ajout d'un nom de classe
+                deleteButton.onclick = () => deleteCard(index); // Ajout de l'appel de deleteCard une fois cliqué sur le boutton
+
+                cardEl.appendChild(deleteButton); // Ajout du boutton de supression au div
+                container.appendChild(cardEl); // Ajout du div au container
+                });
+            }
+
+            async function fetchCards() {
+                const res = await fetch(API_URL); // Appel de l'adresse et reccuperation des donnees
+                cards = await res.json(); // En attente du retour de données et envoi dans une boite
+                renderCards(); // Appel d'une autre fonction
+            }
+
+            async function addCard() {
+                const title = document.getElementById('title').value; // Réccupération du titre contenu dans l'input
+                const description = document.getElementById('description').value; // Récupération de la description contenue dans l'input
+
+                if (!title || !description) { // Si il n'y a ni description, ni titre on envoie une erreur
                     alert("Please fill in both fields.");
                     return;
                 }
 
-                const card = document.createElement('div');
-                card.className = 'card';
+                const newCard = { title, description }; // Creation de l'objet contenant les informations de la nouvelle carte
 
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = "X";
-                deleteButton.className = 'delete-btn';
-                deleteButton.onclick = () => card.remove();
+                const res = await fetch(API_URL, { // Appel de l'api avec une méthode POST pour ajouter du contenu
+                    method: 'POST', // Méthode post
+                    headers: { 'Content-Type': 'application/json' }, // Contenu en JSON
+                    body: JSON.stringify(newCard) // Envoie des informations de l'objet newCard
+                });
 
-                card.innerHTML = `
-                <h3>${title}</h3>
-                <p>${description}</p>
-                `;
+                const savedCard = await res.json(); // Mise en objet de la nouvelle carte
+                cards.push(savedCard); // Ajout de la nouvelle carte dans la liste cards
+                renderCards(); // Appel de la fonction qui envoie cette carte dans le JSON
 
-                card.appendChild(deleteButton);
-                document.getElementById('cardContainer').appendChild(card);
+                document.getElementById('title').value = ''; // Remise à vide de l'input
+                document.getElementById('description').value = ''; // Remise à vide de l'input
+            }
 
-                document.getElementById('title').value = '';
-                document.getElementById('description').value = '';
+            async function deleteCard(index) {
+                const res = await fetch(`${API_URL}/${index}`, { // Appel de l'adresse pour supresison d'une carte avec en paramètre l'index de la carte
+                method: 'DELETE' // Méthode de supression
+                });
             }
         </script>
     </body>

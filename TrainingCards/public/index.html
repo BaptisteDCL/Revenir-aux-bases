@@ -83,6 +83,21 @@
                 <label for="description">Description de l'entrainement:</label>
                 <textarea id="description" placeholder="Entrez ici la description de l'entrainement"></textarea>
             </div>
+            <div class="form-group">
+                <label for="actuel">Actuel :</label>
+                <textarea id="actuel" placeholder="Ce que tu fais actuellement"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="pousser">Pousser vers :</label>
+                <textarea id="pousser" placeholder="Ce que tu veux atteindre"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Catégorie :</label>
+                <select id="category">
+                    <option value="routine">Routine</option>
+                    <option value="challenge">Challenge</option>
+                </select>
+            </div>
             <button onclick="addCard()">Ajouter carte d'entrainement</button>
         </div>
 
@@ -101,8 +116,11 @@
                     cardEl.className = 'card'; // Ajout du nom de class card
                     cardEl.innerHTML = `
                         <h3>${card.title}</h3>
-                        <p>${card.description}</p>
-                    `; // Ajout dans l'HTML du div les données venant de la nouvelle carte
+                        <p><strong>${card.description}</strong></p>
+                        <p><em>Actuel :</em> ${card.actuel}</p>
+                        <p><em>Pousser vers :</em> ${card.pousser}</p>
+                        <p><small>Catégorie : ${card.category}</small></p>
+                        `; // Ajout dans l'HTML du div les données venant de la nouvelle carte
 
                 const deleteButton = document.createElement('button'); // Ajout d'un bouton de supression
                 deleteButton.textContent = "X"; // Modification du contenu du boutton
@@ -123,13 +141,16 @@
             async function addCard() {
                 const title = document.getElementById('title').value; // Réccupération du titre contenu dans l'input
                 const description = document.getElementById('description').value; // Récupération de la description contenue dans l'input
+                const actuel = document.getElementById('actuel').value; // Récupération des données actuelles
+                const pousser = document.getElementById('pousser').value; // Récupération des données à faire
+                const category = document.getElementById('category').value; // Récupération de la catégorie de la carte
 
-                if (!title || !description) { // Si il n'y a ni description, ni titre on envoie une erreur
+                if (!title || !description || !actuel || !pousser || !category) { // Si il n'y a ni description, ni titre on envoie une erreur
                     alert("Please fill in both fields.");
                     return;
                 }
 
-                const newCard = { title, description }; // Creation de l'objet contenant les informations de la nouvelle carte
+                const newCard = { title, description, actuel, pousser, category }; // Creation de l'objet contenant les informations de la nouvelle carte
 
                 const res = await fetch(API_URL, { // Appel de l'api avec une méthode POST pour ajouter du contenu
                     method: 'POST', // Méthode post
@@ -143,6 +164,8 @@
 
                 document.getElementById('title').value = ''; // Remise à vide de l'input
                 document.getElementById('description').value = ''; // Remise à vide de l'input
+                document.getElementById('actuel').value = ''; // Remise à vide de l'input
+                document.getElementById('pousser').value = ''; // Remise à vide de l'input
             }
 
             async function deleteCard(index) {

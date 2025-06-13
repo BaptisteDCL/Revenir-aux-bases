@@ -37,10 +37,15 @@ app.get('/api/cards', (req, res) => {
   res.json(cards);
 });
 
-// ➕ POST : ajouter une carte
 app.post('/api/cards', (req, res) => {
-  const cards = loadCards();
-  const newCard = req.body;
+  const cards = loadCards(); // Chargement des cartes actuelles dans le json
+  const newCard = {
+    title: req.body.title,
+    description: req.body.description,
+    actuel: req.body.actuel || '',
+    pousser: req.body.pousser || '',
+    category: req.body.category || 'routine'
+  };
   cards.push(newCard);
   saveCards(cards);
   res.status(201).json(newCard);

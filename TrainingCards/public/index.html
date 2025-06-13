@@ -149,6 +149,13 @@
                 const res = await fetch(`${API_URL}/${index}`, { // Appel de l'adresse pour supresison d'une carte avec en paramètre l'index de la carte
                 method: 'DELETE' // Méthode de supression
                 });
+
+                if (res.ok) { // Si on a bien supprimé la carte
+                    cards.splice(index, 1); // on supprime l'élément dans la liste locale
+                    renderCards(); // Nous faisons un nouveau rendu des cartes
+                } else {
+                    alert("Failed to delete card"); // Problème si cette carte n'existe pas
+                }
             }
         </script>
     </body>

@@ -13,8 +13,17 @@ const filepath = './cards.json';
 
 // Charger les cartes existantes
 function loadCards() {
-    if (!fs.existsSync(filepath)) fs.writeFileSync(filepath, []);
-    return JSON.parse(fs.readFileSync(filepath));
+  if (!fs.existsSync(filepath)) fs.writeFileSync(filepath, '[]');
+
+  const content = fs.readFileSync(filepath, 'utf8');
+
+  // Si le fichier est vide ou invalide, on renvoie un tableau vide
+  try {
+    return content.trim() === '' ? [] : JSON.parse(content);
+  } catch (e) {
+    console.error("❌ Erreur de parsing JSON :", e);
+    return [];
+  }
 }
 
 // Sauvegarder les cartes

@@ -45,6 +45,7 @@ app.post('/api/cards', (req, res) => {
     actuel: req.body.actuel || '',
     pousser: req.body.pousser || '',
     category: req.body.category || 'routine',
+    type: req.body.type || '',
     progress: req.body.progress || 0
   };
   cards.push(newCard);

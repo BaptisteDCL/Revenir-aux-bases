@@ -102,6 +102,16 @@
                     <option value="challenge">Challenge</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="type">Type :</label>
+                <select id="type">
+                    <option value="gold">Gold / min</option>
+                    <option value="vision">Vision</option>
+                    <option value="tempo">Tempo</option>
+                    <option value="map_awareness">Map Awareness</option>
+                    <option value="teamfight">Teamfight</option>
+                </select>
+            </div>
             <button onclick="addCard()">Ajouter carte d'entrainement</button>
         </div>
 
@@ -130,6 +140,7 @@
                         <p><em>Actuel :</em> ${card.actuel}</p>
                         <p><em>Pousser vers :</em> ${card.pousser}</p>
                         <p><small>Catégorie : ${card.category}</small></p>
+                        <p><small>Type : ${card.type}</small></p>
                         <label>Avancement : <span>${card.progress}%</span></label>
                         <input type="range" min="0" max="100" value="${card.progress}" class="progress-slider">
                         `;
@@ -180,14 +191,15 @@
                 const actuel = document.getElementById('actuel').value; // Récupération des données actuelles
                 const pousser = document.getElementById('pousser').value; // Récupération des données à faire
                 const category = document.getElementById('category').value; // Récupération de la catégorie de la carte
+                const type = document.getElementById('type').value; // Récupération de la catégorie de la carte
 
-                if (!title || !description || !actuel || !pousser || !category) { // Si il n'y a ni description, ni titre on envoie une erreur
+                if (!title || !description || !actuel || !pousser || !category || !type) { // Si il n'y a ni description, ni titre on envoie une erreur
                     alert("Please fill in both fields.");
                     return;
                 }
 
                 const progress = 0; // Valeur initiale à la création
-                const newCard = { title, description, actuel, pousser, category }; // Creation de l'objet contenant les informations de la nouvelle carte
+                const newCard = { title, description, actuel, pousser, category, type }; // Creation de l'objet contenant les informations de la nouvelle carte
 
                 const res = await fetch(API_URL, { // Appel de l'api avec une méthode POST pour ajouter du contenu
                     method: 'POST', // Méthode post

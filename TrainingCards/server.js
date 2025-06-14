@@ -44,11 +44,25 @@ app.post('/api/cards', (req, res) => {
     description: req.body.description,
     actuel: req.body.actuel || '',
     pousser: req.body.pousser || '',
-    category: req.body.category || 'routine'
+    category: req.body.category || 'routine',
+    progress: req.body.progress || 0
   };
   cards.push(newCard);
   saveCards(cards);
   res.status(201).json(newCard);
+});
+
+app.put('/api/cards/:index', (req, res) => {
+  const cards = loadCards();
+  const index = parseInt(req.params.index, 10);
+
+  if (index >= 0 && index < cards.length) {
+    cards[index] = req.body;
+    saveCards(cards);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 // ❌ DELETE : supprimer une carte (par index)

@@ -14,6 +14,10 @@
         h1 {
             color: #38bdf8;
         }
+        h2 {
+        margin-top: 40px;
+        color: #facc15; /* jaune lumineux */
+        }
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -101,34 +105,45 @@
             <button onclick="addCard()">Ajouter carte d'entrainement</button>
         </div>
 
-        <div class="card-container" id="cardContainer"></div>
+        <h2>Routines</h2>
+        <div class="card-container" id="routineContainer"></div>
+
+        <h2>Challenges</h2>
+        <div class="card-container" id="challengeContainer"></div>
 
         <script>
             const API_URL = 'http://localhost:3000/api/cards'; // adresse
             let cards = [];
 
             function renderCards() {
-                const container = document.getElementById('cardContainer'); // Récupération de l'objet à cette adresse
-                container.innerHTML = ''; // Passage à vide
+                const routineContainer = document.getElementById('routineContainer'); // Recuperation du container de routine
+                const challengeContainer = document.getElementById('challengeContainer'); // Recuperation du container de Challenges
+                routineContainer.innerHTML = '';
+                challengeContainer.innerHTML = '';
 
-                cards.forEach((card, index) => { // Pour chaque carte
-                    const cardEl = document.createElement('div'); // Création d'un div
-                    cardEl.className = 'card'; // Ajout du nom de class card
+                cards.forEach((card, index) => {
+                    const cardEl = document.createElement('div');
+                    cardEl.className = 'card';
                     cardEl.innerHTML = `
-                        <h3>${card.title}</h3>
-                        <p><strong>${card.description}</strong></p>
-                        <p><em>Actuel :</em> ${card.actuel}</p>
-                        <p><em>Pousser vers :</em> ${card.pousser}</p>
-                        <p><small>Catégorie : ${card.category}</small></p>
-                        `; // Ajout dans l'HTML du div les données venant de la nouvelle carte
+                    <h3>${card.title}</h3>
+                    <p><strong>${card.description}</strong></p>
+                    <p><em>Actuel :</em> ${card.actuel}</p>
+                    <p><em>Pousser vers :</em> ${card.pousser}</p>
+                    <p><small>Catégorie : ${card.category}</small></p>
+                    `;
 
-                const deleteButton = document.createElement('button'); // Ajout d'un bouton de supression
-                deleteButton.textContent = "X"; // Modification du contenu du boutton
-                deleteButton.className = 'delete-btn'; // Ajout d'un nom de classe
-                deleteButton.onclick = () => deleteCard(index); // Ajout de l'appel de deleteCard une fois cliqué sur le boutton
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = "X";
+                    deleteButton.className = 'delete-btn';
+                    deleteButton.onclick = () => deleteCard(index);
 
-                cardEl.appendChild(deleteButton); // Ajout du boutton de supression au div
-                container.appendChild(cardEl); // Ajout du div au container
+                    cardEl.appendChild(deleteButton);
+
+                    if (card.category === 'challenge') {
+                    challengeContainer.appendChild(cardEl);
+                    } else {
+                    routineContainer.appendChild(cardEl);
+                    }
                 });
             }
 

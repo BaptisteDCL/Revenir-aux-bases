@@ -279,11 +279,11 @@
                 // Étape 1 : liste fixe de tous les types
                 const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight"]; // Ajout de tous les types possibles pour les cartes
                 const counts = {
-                    gold: 0,
-                    vision: 0,
-                    tempo: 0,
-                    map_awareness: 0,
-                    teamfight: 0
+                    gold: 1,
+                    vision: 1,
+                    tempo: 1,
+                    map_awareness: 1,
+                    teamfight: 1
                 }; // Instanciation de tous les types à 0    
                 
                 // Étape 2 : compte les cartes complétées par type
@@ -301,13 +301,23 @@
                     type: 'radar',
                     data: {
                         labels: allTypes,
-                        datasets: [{
+                        datasets: [
+                            {
                             label: 'Cartes terminées par type',
                             data: values,
                             backgroundColor: 'rgba(34, 197, 94, 0.2)',
                             borderColor: '#22c55e',
                             pointBackgroundColor: '#22c55e'
-                        }]
+                            },
+                            {
+                                label: 'Diamant',
+                                data: allTypes.map(() => 5),
+                                fill: false,
+                                borderColor: 'rgba(250, 204, 21, 0.7)', // jaune
+                                borderDash: [5, 5], // ligne pointillée
+                                pointBackgroundColor: 'rgba(250, 204, 21, 1)',
+                            }
+                        ]
                     },
                     options: {
                         responsive: true,

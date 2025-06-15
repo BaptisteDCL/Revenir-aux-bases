@@ -140,6 +140,7 @@
         <script>
             const API_URL = 'http://localhost:3000/api/cards'; // adresse
             let cards = [];
+            let completedRadarChartInstance = null;
 
             function renderCards() {
                 const routineContainer = document.getElementById('routineContainer'); // Recuperation du container de routine
@@ -250,6 +251,8 @@
                 document.getElementById('description').value = ''; // Remise à vide de l'input
                 document.getElementById('actuel').value = ''; // Remise à vide de l'input
                 document.getElementById('pousser').value = ''; // Remise à vide de l'input
+                document.getElementById('category').value = 'routine'; // ou '' si tu veux vraiment vider
+                document.getElementById('type').value = 'gold'; // ou ''
             }
 
             async function deleteCard(index) {
@@ -264,8 +267,6 @@
                     alert("Failed to delete card"); // Problème si cette carte n'existe pas
                 }
             }
-
-            let completedRadarChartInstance = null; // Instanciation du graphique à null
 
             function drawCompletedRadarChart() {
                 
@@ -296,7 +297,7 @@
                 const values = allTypes.map(type => counts[type]); 
 
                 // Étape 4 : création du graphique radar
-                new Chart(ctx, {
+                completedRadarChartInstance  = new Chart(ctx, {
                     type: 'radar',
                     data: {
                         labels: allTypes,

@@ -131,9 +131,9 @@
                 routineContainer.innerHTML = '';
                 challengeContainer.innerHTML = '';
 
-                cards.forEach((card, index) => {
-                    const cardEl = document.createElement('div');
-                    cardEl.className = 'card';
+                cards.forEach((card, index) => { // Pour chaque carte
+                    const cardEl = document.createElement('div'); // On crée l'élément qui contiendra la nouvelle carte
+                    cardEl.className = 'card'; // Ajout du nom de classe
                     cardEl.innerHTML = `
                         <h3>${card.title}</h3>
                         <p><strong>${card.description}</strong></p>
@@ -143,20 +143,20 @@
                         <p><small>Type : ${card.type}</small></p>
                         <label>Avancement : <span>${card.progress}%</span></label>
                         <input type="range" min="0" max="100" value="${card.progress}" class="progress-slider">
-                        `;
-                    const slider = cardEl.querySelector('.progress-slider');
-                    const label = cardEl.querySelector('label span');
+                        `; // Remplissage de l'élément
+                    const slider = cardEl.querySelector('.progress-slider'); // Récupération du slider
+                    const label = cardEl.querySelector('label span'); // Récupération du label
 
-                    slider.addEventListener('input', async (e) => {
-                    const newValue = parseInt(e.target.value, 10);
-                    card.progress = newValue;
-                    label.textContent = `${newValue}%`;
+                    slider.addEventListener('input', async (e) => { // A chaque changement du slider
+                    const newValue = parseInt(e.target.value, 10); // On convertit la nouvelle valeur en int
+                    card.progress = newValue; // On met à jour la progression de la carte
+                    label.textContent = `${newValue}%`; // On met à jour le label en front
 
                     // Sauvegarder sur le serveur
-                    const res = await fetch(`${API_URL}/${index}`, {
+                    const res = await fetch(`${API_URL}/${index}`, { // On attend de bien réccupérer la carte associée à l'index
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(card)
+                        body: JSON.stringify(card) // On modifie la carte avec les arguments associés
                     });
 
                     if (!res.ok) {
@@ -164,17 +164,17 @@
                     }
                     });
                     
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = "X";
-                    deleteButton.className = 'delete-btn';
-                    deleteButton.onclick = () => deleteCard(index);
+                    const deleteButton = document.createElement('button'); // Ajout du bouton de supression
+                    deleteButton.textContent = "X"; // Ajout de contenu pour le bouton
+                    deleteButton.className = 'delete-btn'; // Ajout de classe
+                    deleteButton.onclick = () => deleteCard(index); // Si on clique sur le bouton, on appelle la fonction "deleteCard"
 
-                    cardEl.appendChild(deleteButton);
+                    cardEl.appendChild(deleteButton); // On ajout le bouton à la carte
 
-                    if (card.category === 'challenge') {
-                    challengeContainer.appendChild(cardEl);
+                    if (card.category === 'challenge') { // On décide à quel container on va ajouter la carte selon sa catégorie
+                        challengeContainer.appendChild(cardEl);
                     } else {
-                    routineContainer.appendChild(cardEl);
+                        routineContainer.appendChild(cardEl);
                     }
                 });
             }

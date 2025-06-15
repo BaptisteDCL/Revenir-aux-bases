@@ -121,6 +121,9 @@
         <h2>Challenges</h2>
         <div class="card-container" id="challengeContainer"></div>
 
+        <h2>Cartes terminées</h2>
+        <div class="card-container" id="completedContainer"></div>
+
         <script>
             const API_URL = 'http://localhost:3000/api/cards'; // adresse
             let cards = [];
@@ -128,6 +131,8 @@
             function renderCards() {
                 const routineContainer = document.getElementById('routineContainer'); // Recuperation du container de routine
                 const challengeContainer = document.getElementById('challengeContainer'); // Recuperation du container de Challenges
+                const completedContainer = document.getElementById('completedContainer'); // Récupération du container des cartes complétées
+                completedContainer.innerHTML = '';
                 routineContainer.innerHTML = '';
                 challengeContainer.innerHTML = '';
 
@@ -171,11 +176,26 @@
 
                     cardEl.appendChild(deleteButton); // On ajout le bouton à la carte
 
-                    if (card.category === 'challenge') { // On décide à quel container on va ajouter la carte selon sa catégorie
+                    if (card.progress === 100) { // Si la carte est complétée, alors elle est envoyée dans le container completed
+                        completedContainer.appendChild(cardEl);
+                    }else if (card.category === 'challenge') { // On décide à quel container on va ajouter la carte selon sa catégorie
                         challengeContainer.appendChild(cardEl);
                     } else {
                         routineContainer.appendChild(cardEl);
                     }
+                    
+                    const completeButton = document.createElement('button'); // On crée un nouvel element appelé "completeButton"
+                    completeButton.textContent = "Terminer"; // On ajoute du texte au bouton
+                    completeButton.onclick = async () => { // Quand on clique sur le bouton
+                        card.progress = 100; // Passage automatique de la progression à 100
+                        await fetch(`${API_URL}/${index}`, { // On attend de récupérer les données de la carte
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(card) // On modifie la carte en base de donnée
+                        });
+                        renderCards(); // On refait le rendu de la carte
+                    };
+                    cardEl.appendChild(completeButton); // Ajout du bouton à la carte
                 });
             }
 

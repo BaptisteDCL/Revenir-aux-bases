@@ -74,6 +74,14 @@
         .delete-btn:hover {
             background: #dc2626;
         }
+        #completedRadarChart {
+            max-width: 400px;
+            max-height: 400px;
+            width: 100%;
+            height: auto;
+            margin: 40px auto;
+            display: block;
+        }
     </style>
     </head>
     <body>
@@ -115,6 +123,9 @@
             <button onclick="addCard()">Ajouter carte d'entrainement</button>
         </div>
 
+        <h2>Radar des types terminés</h2>
+        <canvas id="completedRadarChart" width="400" height="400"></canvas>
+
         <h2>Routines</h2>
         <div class="card-container" id="routineContainer"></div>
 
@@ -123,6 +134,8 @@
 
         <h2>Cartes terminées</h2>
         <div class="card-container" id="completedContainer"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
             const API_URL = 'http://localhost:3000/api/cards'; // adresse
@@ -197,6 +210,8 @@
                     };
                     cardEl.appendChild(completeButton); // Ajout du bouton à la carte
                 });
+
+                drawCompletedRadarChart(); // Appel de la fonction pour mettre à jour le graphique
             }
 
             async function fetchCards() {
@@ -248,6 +263,63 @@
                 } else {
                     alert("Failed to delete card"); // Problème si cette carte n'existe pas
                 }
+            }
+
+            let completedRadarChartInstance = null; // Instanciation du graphique à null
+
+            function drawCompletedRadarChart() {
+                
+                if (completedRadarChartInstance) { // Si il y a déjà un canvas, on le détruit
+                    completedRadarChartInstance.destroy();
+                }
+
+                const ctx = document.getElementById('completedRadarChart').getContext('2d'); // On réccupère le canvas dans le contexte d'une modification en 2d
+
+                // Étape 1 : liste fixe de tous les types
+                const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight"]; // Ajout de tous les types possibles pour les cartes
+                const counts = {
+                    gold: 0,
+                    vision: 0,
+                    tempo: 0,
+                    map_awareness: 0,
+                    teamfight: 0
+                }; // Instanciation de tous les types à 0    
+                
+                // Étape 2 : compte les cartes complétées par type
+                cards.forEach(card => {
+                    if (card.progress === 100 && allTypes.includes(card.type)) {
+                        counts[card.type]++;
+                    }
+                });
+
+                // Étape 3 : construction des données dans l'ordre des types
+                const values = allTypes.map(type => counts[type]); 
+
+                // Étape 4 : création du graphique radar
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: allTypes,
+                        datasets: [{
+                            label: 'Cartes terminées par type',
+                            data: values,
+                            backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                            borderColor: '#22c55e',
+                            pointBackgroundColor: '#22c55e'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0 // Pas de décimales
+                                }
+                            }
+                        }
+                    }
+                });
             }
 
             fetchCards();

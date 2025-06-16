@@ -41,5 +41,69 @@
             <textarea id="description" placeholder="description"></textarea>
             <button onclick="addCard()">Ajouter Carte</button>
         </div>
+        <h2>Mes cartes</h2>
+        <div id="cardsContainer"></div>
     </body>
+    <script>
+
+        let cards = [];
+
+        async function fetchCards() {
+
+            const res = await fetch('api/cards'); // Appel de la fonction get pour avoir toutes les cartes
+
+            if (!res.ok) {
+                alert("Ne peut pas réccupérer les données");
+                return;
+            }
+
+            cards = await res.json(); // Mise dans la liste cards les cartes du JSON
+            renderCards(); // Appel de la fonction pour afficher les cartes
+        }
+
+        async function renderCards() {
+            const container = document.getElementById("cardsContainer"); // Récupération du div qui contient les cartes
+            container.innerHTML = "";
+
+            cards.forEach((cards, index) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = "card";
+                cardEl.innerHTML = `<h3>${title}</h3>
+                <p>${description}</p>`;
+                container.appendChild(cardEl);
+            });
+        }
+
+        async function addCard() {
+            const title = document.getElementById("title").value; // On récupère le titre
+            const description = document.getElementById("description").value; // On récupère la description
+
+            if (!title || !description) { // Si il n'y a pas de description ou de titre alors erreur
+                alert("Remplis tous les champs");
+                return;
+            }
+
+            const newCard = {title, description }; // Création d'un nouvel objet avec les valeurs des inputs
+
+            const res = await fetch('api/cards', { // Appel de l'api avec la route de post pour ajouter une nouvelle carte
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body : JSON.stringify(newCard) // Mise en corps de la nouvelle carte
+            });
+
+            if (!res.ok) { // Prise en compte des erreurs d'ajout de carte
+                alert("Erreur lors de l'ajout de la carte");
+                return;
+            };
+
+            const savedCard = await res.json(); // Ajout de la nouvelle carte dans l'objet
+            cards.push(savedCard) // Ajout de la nouvelle carte dans la liste des cartes locales
+            renderCards();
+
+            document.getElementById("title").value = '';
+            document.getElementById("description").value = '';
+        }
+
+        fetchCards();
+    </script>
 </html>

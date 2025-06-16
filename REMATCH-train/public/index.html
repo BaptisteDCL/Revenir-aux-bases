@@ -45,12 +45,12 @@
         <div id="cardsContainer"></div>
     </body>
     <script>
-
+        const API_URL = 'http://localhost:3000/api/cards'; // adresse
         let cards = [];
 
         async function fetchCards() {
 
-            const res = await fetch('api/cards'); // Appel de la fonction get pour avoir toutes les cartes
+            const res = await fetch(API_URL); // Appel de la fonction get pour avoir toutes les cartes
 
             if (!res.ok) {
                 alert("Ne peut pas réccupérer les données");
@@ -85,7 +85,7 @@
 
             const newCard = {title, description }; // Création d'un nouvel objet avec les valeurs des inputs
 
-            const res = await fetch('api/cards', { // Appel de l'api avec la route de post pour ajouter une nouvelle carte
+            const res = await fetch(API_URL, { // Appel de l'api avec la route de post pour ajouter une nouvelle carte
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body : JSON.stringify(newCard) // Mise en corps de la nouvelle carte

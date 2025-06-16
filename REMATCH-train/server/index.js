@@ -10,7 +10,7 @@ app.use(cors()); // L'application utilise cors
 app.use(express.json()); // L'application traitera des données JSON
 app.use(express.static('public')); // Pour afficher la page, prendra le index.html contenu dans le dossier public
 
-app.get('api/cards', (req, res) =>{
+app.get('/api/cards', (req, res) =>{
     fs.readFile(DATA_FILE, 'utf-8', (err, data) =>{ // Fonction de lecture du fichier JSON
         if (err) return res.status(500).json({ error : "Erreur lors de la lecture du fichier"}); // Catching de l'erreur générée
 
@@ -27,7 +27,7 @@ app.get('api/cards', (req, res) =>{
 });
 
 // Creation de la route POST pour ajouter de nouvelles cartes à la BDD
-app.post('api/cards', (req, res) =>{
+app.post('/api/cards', (req, res) =>{
     const newCard = req.body; // Création d'un nouvel objet qui contiendra les données en JSON
 
     fs.readFile(DATA_FILE, 'utf-8', (err, data) =>{ // Appel de la fonction pour lire le fichier json

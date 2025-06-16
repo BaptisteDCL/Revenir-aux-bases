@@ -65,11 +65,11 @@
             const container = document.getElementById("cardsContainer"); // Récupération du div qui contient les cartes
             container.innerHTML = "";
 
-            cards.forEach((cards, index) => { // Pour chaque carte
+            cards.forEach((card, index) => { // Pour chaque carte
                 const cardEl = document.createElement('div'); // Créer un div
                 cardEl.className = "card"; // Ajouter comme nom de classe 'card'
-                cardEl.innerHTML = `<h3>${title.value}</h3>
-                <p>${description.value}</p>`; // Ajout de l'intérieur du div
+                cardEl.innerHTML = `<h3>${card.title}</h3>
+                <p>${card.description}</p>`; // Ajout de l'intérieur du div
                 container.appendChild(cardEl); // On ajoute la nouvelle carte au container
             });
         }

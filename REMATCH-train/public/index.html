@@ -68,8 +68,8 @@
             cards.forEach((cards, index) => {
                 const cardEl = document.createElement('div');
                 cardEl.className = "card";
-                cardEl.innerHTML = `<h3>${title}</h3>
-                <p>${description}</p>`;
+                cardEl.innerHTML = `<h3>${title.value}</h3>
+                <p>${description.value}</p>`;
                 container.appendChild(cardEl);
             });
         }

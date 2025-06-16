@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Rematch Training Cards</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                background: #0f172a;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 20px;
+            }
+            h1 {
+                color: #38bdf8;
+            }
+            input, textarea, button {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                margin-bottom: 10px;
+                border: none;
+                border-radius: 4px;
+            }
+            button {
+                background: #38bdf8;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            .card {
+                background: #1e293b;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                margin: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h1> REMATCH! - Cartes d'entrainement</h1>
+        <div>
+            <input type="text" id="title" placeholder="Titre">
+            <textarea id="description" placeholder="description"></textarea>
+            <button onclick="addCard()">Ajouter Carte</button>
+        </div>
+    </body>
+</html>

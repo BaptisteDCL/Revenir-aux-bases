@@ -104,6 +104,22 @@
             document.getElementById("description").value = '';
         }
 
+        // Appel de la route pour supprimer une carte
+        async function deleteCard(index) {
+            // Appel de la route delete avec en paramètre l'index de la carte à supprimer
+            const res = await fetch(`${API_URL}/${index}`, {
+                method: 'DELETE'
+            });
+
+            // Si le résultat est ok alors on supprime l'index localement et on fait un nouveau rendu
+            if (res.ok) {
+                cards.splice(index, 1);
+                renderCards();
+            } else {
+                alert("Erreur lors de la suppression de la carte");
+            }
+        }
+
         fetchCards();
     </script>
 </html>

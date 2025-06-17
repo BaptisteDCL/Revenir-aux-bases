@@ -32,6 +32,35 @@
                 border-radius: 0.5rem;
                 margin: 1rem;
             }
+            button {
+                background: #38bdf8;
+                color: #0f172a;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            button:hover{
+                background : #0ea5e9;
+            }
+            .delete-btn {
+                background: #ef4444;
+                color: white;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+                padding: 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .delete-btn:hover {
+                background: #dc2626;
+            }
         </style>
     </head>
     <body>
@@ -71,6 +100,17 @@
                 cardEl.innerHTML = `<h3>${card.title}</h3>
                 <p>${card.description}</p>`; // Ajout de l'intérieur du div
                 container.appendChild(cardEl); // On ajoute la nouvelle carte au container
+
+                // Création du bouton de supression
+                const deleteButton = document.createElement('button');
+                // Ajout du contenu pour afficher la croix
+                deleteButton.textContent = "X";
+                // Ajout de la classe "delete-btn"
+                deleteButton.className = 'delete-btn';
+                // Appel de la fonction deleteCard au clic sur l'élément
+                deleteButton.onclick = () => deleteCard(index);
+                // Ajout de cet élément à la carte
+                cardEl.appendChild(deleteButton);
             });
         }
 

@@ -118,6 +118,7 @@
                     <option value="tempo">Tempo</option>
                     <option value="map_awareness">Map Awareness</option>
                     <option value="teamfight">Teamfight</option>
+                    <option value="Lecture_erreurs">Lecture des erreurs</option>
                 </select>
             </div>
             <button onclick="addCard()">Ajouter carte d'entrainement</button>
@@ -150,67 +151,50 @@
                 routineContainer.innerHTML = '';
                 challengeContainer.innerHTML = '';
 
-                cards.forEach((card, index) => { // Pour chaque carte
-                    const cardEl = document.createElement('div'); // On crée l'élément qui contiendra la nouvelle carte
-                    cardEl.className = 'card'; // Ajout du nom de classe
-                    cardEl.innerHTML = `
-                        <h3>${card.title}</h3>
-                        <p><strong>${card.description}</strong></p>
-                        <p><em>Actuel :</em> ${card.actuel}</p>
-                        <p><em>Pousser vers :</em> ${card.pousser}</p>
-                        <p><small>Catégorie : ${card.category}</small></p>
-                        <p><small>Type : ${card.type}</small></p>
-                        <label>Avancement : <span>${card.progress}%</span></label>
-                        <input type="range" min="0" max="100" value="${card.progress}" class="progress-slider">
-                        `; // Remplissage de l'élément
-                    const slider = cardEl.querySelector('.progress-slider'); // Récupération du slider
-                    const label = cardEl.querySelector('label span'); // Récupération du label
+                cards.forEach((card, index) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card';
+                cardEl.innerHTML = `
+                    <h3>${card.title}</h3>
+                    <p><strong>${card.description}</strong></p>
+                    <p><em>Actuel :</em> ${card.actuel}</p>
+                    <p><em>Pousser vers :</em> ${card.pousser}</p>
+                    <p><small>Catégorie : ${card.category}</small></p>
+                    <p><small>Type : ${card.type}</small></p>
+                `;
 
-                    slider.addEventListener('input', async (e) => { // A chaque changement du slider
-                    const newValue = parseInt(e.target.value, 10); // On convertit la nouvelle valeur en int
-                    card.progress = newValue; // On met à jour la progression de la carte
-                    label.textContent = `${newValue}%`; // On met à jour le label en front
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = "X";
+                deleteButton.className = 'delete-btn';
+                deleteButton.onclick = () => deleteCard(index);
+                cardEl.appendChild(deleteButton);
 
-                    // Sauvegarder sur le serveur
-                    const res = await fetch(`${API_URL}/${index}`, { // On attend de bien réccupérer la carte associée à l'index
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(card) // On modifie la carte avec les arguments associés
-                    });
-
-                    if (!res.ok) {
-                        alert('Erreur lors de la mise à jour de la progression.');
-                    }
-                    });
-                    
-                    const deleteButton = document.createElement('button'); // Ajout du bouton de supression
-                    deleteButton.textContent = "X"; // Ajout de contenu pour le bouton
-                    deleteButton.className = 'delete-btn'; // Ajout de classe
-                    deleteButton.onclick = () => deleteCard(index); // Si on clique sur le bouton, on appelle la fonction "deleteCard"
-
-                    cardEl.appendChild(deleteButton); // On ajout le bouton à la carte
-
-                    if (card.progress === 100) { // Si la carte est complétée, alors elle est envoyée dans le container completed
-                        completedContainer.appendChild(cardEl);
-                    }else if (card.category === 'challenge') { // On décide à quel container on va ajouter la carte selon sa catégorie
-                        challengeContainer.appendChild(cardEl);
-                    } else {
-                        routineContainer.appendChild(cardEl);
-                    }
-                    
-                    const completeButton = document.createElement('button'); // On crée un nouvel element appelé "completeButton"
-                    completeButton.textContent = "Terminer"; // On ajoute du texte au bouton
-                    completeButton.onclick = async () => { // Quand on clique sur le bouton
-                        card.progress = 100; // Passage automatique de la progression à 100
-                        await fetch(`${API_URL}/${index}`, { // On attend de récupérer les données de la carte
+                // Ajoute le bouton "Terminer" uniquement si la carte n'est pas encore complétée
+                if (card.progress < 100) {
+                    const completeButton = document.createElement('button');
+                    completeButton.textContent = "✅ Terminer";
+                    completeButton.style.marginTop = '10px';
+                    completeButton.onclick = async () => {
+                        card.progress = 100;
+                        const res = await fetch(`${API_URL}/${index}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(card) // On modifie la carte en base de donnée
+                            body: JSON.stringify(card)
                         });
-                        renderCards(); // On refait le rendu de la carte
+                        if (res.ok) renderCards();
+                        else alert("Erreur lors de la mise à jour.");
                     };
-                    cardEl.appendChild(completeButton); // Ajout du bouton à la carte
-                });
+                    cardEl.appendChild(completeButton);
+                }
+
+                if (card.progress === 100) {
+                    completedContainer.appendChild(cardEl);
+                } else if (card.category === 'challenge') {
+                    challengeContainer.appendChild(cardEl);
+                } else {
+                    routineContainer.appendChild(cardEl);
+                }
+            });
 
                 drawCompletedRadarChart(); // Appel de la fonction pour mettre à jour le graphique
             }
@@ -277,13 +261,14 @@
                 const ctx = document.getElementById('completedRadarChart').getContext('2d'); // On réccupère le canvas dans le contexte d'une modification en 2d
 
                 // Étape 1 : liste fixe de tous les types
-                const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight"]; // Ajout de tous les types possibles pour les cartes
+                const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight", "Lecture_erreurs"]; // Ajout de tous les types possibles pour les cartes
                 const counts = {
                     gold: 1,
                     vision: 1,
                     tempo: 1,
                     map_awareness: 1,
-                    teamfight: 1
+                    teamfight: 1,
+                    Lecture_erreurs: 1
                 }; // Instanciation de tous les types à 0    
                 
                 // Étape 2 : compte les cartes complétées par type

@@ -51,6 +51,39 @@ app.post('/api/cards', (req, res) =>{
     });
 });
 
+// Route DELETE pour supprimer une carte selon son index
+app.delete('/api/cards/:index', (req, res) => {
+    const index = parseInt(req.params.index, 10); // Récupération de l'index de la carte à supprimer
+
+    fs.readFile(DATA_FILE, 'utf-8', (err, data) =>{ // Lecture des données stockées dans le JSON
+        if (err) return res.status(500).json({ error : "Erreur lors de la lecture du fichier"});
+
+        let cards = [] // On instancie l'objet qui va contenir les données
+
+        // Try catch pour convertir les données JSON
+        try {
+            cards = JSON.parse(data);
+        } catch (e) {
+            return res.status(500).json({ error : "Erreur dans le JSON"});
+        }
+
+        // Si l'index est en dehors de la liste alors on retourne une erreur
+        if (index < 0 || index >= cards.length) {
+            return res.status(404).json({ error : "Index introuvable"});
+        }
+
+        // Suppression de la carte de la liste
+        cards.splice(index, 1); 
+
+        // Ecriture du nouveau JSON
+        fs.writeFile(DATA_FILE, JSON.stringify(cards, null, 2), (err) =>{
+            if (err) return res.status(500).json({ error : "Erreur lors de l'écriture du JSON"});
+
+            res.status(200).json({ message : "Carte supprimée"});
+        });
+    });
+});
+
 app.listen(PORT, () =>{
     console.log(`Server running on http://localhost:${PORT}`);
 });

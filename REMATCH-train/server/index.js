@@ -106,7 +106,10 @@ app.put('/api/cards/:index', (req, res) => {
 
   if (index >= 0 && index < cards.length) { // Si l'index est plus grand ou égal à 0 et qu'il est plus petit que la taille de la liste
     cards[index] = req.body; // La carte avec le bon index est remplacé par celui de PUT
-    saveCards(cards); // Sauvegarde de l'opération
+    // Ecriture du nouveau JSON
+    fs.writeFile(DATA_FILE, JSON.stringify(cards, null, 2), (err) => {
+        if (err) return res.status(500).json({ error : "Erreur lors de l'écriture du JSON"});
+    });
     res.sendStatus(200);
   } else {
     res.sendStatus(404);

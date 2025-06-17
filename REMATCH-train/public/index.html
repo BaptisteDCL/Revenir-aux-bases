@@ -80,6 +80,9 @@
         </div>
         <h2>Mes cartes</h2>
         <div id="cardsContainer"></div>
+
+        <h2>Cartes terminées</h2>
+        <div class="card-container" id="completedContainer"></div>
     </body>
     <script>
         const API_URL = 'http://localhost:3000/api/cards'; // adresse
@@ -101,6 +104,8 @@
         async function renderCards() {
             const container = document.getElementById("cardsContainer"); // Récupération du div qui contient les cartes
             container.innerHTML = "";
+            const completedContainer = document.getElementById('completedContainer'); // Récupération du container des cartes complétées
+            completedContainer.innerHTML = '';
 
             cards.forEach((card, index) => { // Pour chaque carte
                 const cardEl = document.createElement('div'); // Créer un div
@@ -119,19 +124,51 @@
                 deleteButton.onclick = () => deleteCard(index);
                 // Ajout de cet élément à la carte
                 cardEl.appendChild(deleteButton);
+
+                // Si la carte n'est pas terminée
+                if (card.finished === 'false') {
+                    // Création d'un nouveau bouton
+                    const finishButton = document.createElement('button');
+                    // Ajout comme texte "✅ Terminer"
+                    finishButton.textContent = "✅ Terminer";
+                    // Ajout d'un margin
+                    finishButton.style.marginTop = "10px";
+                    // Ajouter un appel sur clique
+                    finishButton.onclick = async() => {
+                        // Passer la carte à terminé
+                        card.finished = "true";
+                        // Appel de la route PUT
+                        const res = await fetch(`${API_URL}/${index}`, {
+                            method: "PUT",
+                            headers: { 'Content-Type': 'application/json'},
+                            body : JSON.stringify(card)
+                        });
+                        // Mise à jour du rendu des cartes si tout s'est bien passé
+                        if (res.ok) renderCards();
+                        else alert("Erreur lors du passage de la carte à terminé");
+                    };
+                    // Ajout du boutton à chaque carte
+                    cardEl.appendChild(finishButton);
+                }
+                // Si la carte est terminée, alors on la met dans un autre conteneur
+                if (card.finished === "true") {
+                    completedContainer.appendChild(cardEl);
+                }
             });
         }
 
         async function addCard() {
             const title = document.getElementById("title").value; // On récupère le titre
             const description = document.getElementById("description").value; // On récupère la description
+            // La carte est créée non terminée
+            const finished = "false";
 
             if (!title || !description) { // Si il n'y a pas de description ou de titre alors erreur
                 alert("Remplis tous les champs");
                 return;
             }
 
-            const newCard = {title, description }; // Création d'un nouvel objet avec les valeurs des inputs
+            const newCard = {title, description, finished }; // Création d'un nouvel objet avec les valeurs des inputs
 
             const res = await fetch(API_URL, { // Appel de l'api avec la route de post pour ajouter une nouvelle carte
                 method: 'POST',

@@ -10,6 +10,21 @@ app.use(cors()); // L'application utilise cors
 app.use(express.json()); // L'application traitera des données JSON
 app.use(express.static('public')); // Pour afficher la page, prendra le index.html contenu dans le dossier public
 
+// Charger les cartes existantes
+function loadCards() {
+  if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]'); // Si le fichier json n'est pas trouvé alors nous le remplissons d'une liste vide
+
+  const content = fs.readFileSync(DATA_FILE, 'utf8'); // Passage du contenu en utf8
+
+  // Si le fichier est vide ou invalide, on renvoie un tableau vide
+  try {
+    return content.trim() === '' ? [] : JSON.parse(content); // Si le contenu est vide alors on retourne une liste vide qu'on parse en JSON
+  } catch (e) {
+    console.error("❌ Erreur de parsing JSON :", e);
+    return [];
+  }
+}
+
 app.get('/api/cards', (req, res) =>{
     fs.readFile(DATA_FILE, 'utf-8', (err, data) =>{ // Fonction de lecture du fichier JSON
         if (err) return res.status(500).json({ error : "Erreur lors de la lecture du fichier"}); // Catching de l'erreur générée
@@ -82,6 +97,20 @@ app.delete('/api/cards/:index', (req, res) => {
             res.status(200).json({ message : "Carte supprimée"});
         });
     });
+});
+
+// Création de la route put pour modifier une carte
+app.put('/api/cards/:index', (req, res) => {
+  const cards = loadCards(); // Chargement des cartes
+  const index = parseInt(req.params.index, 10); // Passage de l'argument index en INT
+
+  if (index >= 0 && index < cards.length) { // Si l'index est plus grand ou égal à 0 et qu'il est plus petit que la taille de la liste
+    cards[index] = req.body; // La carte avec le bon index est remplacé par celui de PUT
+    saveCards(cards); // Sauvegarde de l'opération
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.listen(PORT, () =>{

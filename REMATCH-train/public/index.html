@@ -92,10 +92,22 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="type">Categorie :</label>
+                <select id="category">
+                    <option value="Challenge">Challenge</option>
+                    <option value="Routine">Routine</option>
+                </select>
+            </div>
+
             <button onclick="addCard()">Ajouter Carte</button>
         </div>
-        <h2>Mes cartes</h2>
-        <div id="cardsContainer"></div>
+
+        <h2>Routines</h2>
+        <div class="cardsContainer" id="routineContainer"></div>
+
+        <h2>Challenges</h2>
+        <div class="cardsContainer" id="challengeContainer"></div>
 
         <h2>Cartes terminées</h2>
         <div class="cardsContainer" id="completedContainer"></div>
@@ -118,10 +130,12 @@
         }
 
         async function renderCards() {
-            const container = document.getElementById("cardsContainer"); // Récupération du div qui contient les cartes
-            container.innerHTML = "";
             const completedContainer = document.getElementById('completedContainer'); // Récupération du container des cartes complétées
             completedContainer.innerHTML = '';
+            const challengeContainer = document.getElementById("challengeContainer");
+            challengeContainer.innerHTML = '';
+            const routineContainer = document.getElementById("routineContainer")
+            routineContainer.innerHTML = '';
 
             cards.forEach((card, index) => { // Pour chaque carte
                 const cardEl = document.createElement('div'); // Créer un div
@@ -129,7 +143,6 @@
                 cardEl.innerHTML = `<h3>${card.title}</h3>
                 <p>${card.description}</p>
                 <p>${card.type}</p>`; // Ajout de l'intérieur du div
-                container.appendChild(cardEl); // On ajoute la nouvelle carte au container
 
                 // Création du bouton de supression
                 const deleteButton = document.createElement('button');
@@ -167,9 +180,14 @@
                     // Ajout du boutton à chaque carte
                     cardEl.appendChild(finishButton);
                 }
+                
                 // Si la carte est terminée, alors on la met dans un autre conteneur
                 if (card.finished === "true") {
                     completedContainer.appendChild(cardEl);
+                } else if (card.category === "Challenge") {
+                    challengeContainer.appendChild(cardEl);
+                } else {
+                    routineContainer.appendChild(cardEl);
                 }
             });
         }
@@ -178,6 +196,7 @@
             const title = document.getElementById("title").value; // On récupère le titre
             const description = document.getElementById("description").value; // On récupère la description
             const type = document.getElementById("type").value;
+            const category = document.getElementById("category").value;
             // La carte est créée non terminée
             const finished = "false";
 
@@ -186,7 +205,7 @@
                 return;
             }
 
-            const newCard = {title, description, finished, type }; // Création d'un nouvel objet avec les valeurs des inputs
+            const newCard = {title, description, finished, type, category }; // Création d'un nouvel objet avec les valeurs des inputs
 
             const res = await fetch(API_URL, { // Appel de l'api avec la route de post pour ajouter une nouvelle carte
                 method: 'POST',

@@ -119,6 +119,7 @@
                     <option value="map_awareness">Map Awareness</option>
                     <option value="teamfight">Teamfight</option>
                     <option value="Lecture_erreurs">Lecture des erreurs</option>
+                    <option value="Risques">Prise de risques</option>
                 </select>
             </div>
             <button onclick="addCard()">Ajouter carte d'entrainement</button>
@@ -186,6 +187,23 @@
                     };
                     cardEl.appendChild(completeButton);
                 }
+
+                // Ajout d'un bouton pour cloner une carte
+                const cloneButton = document.createElement('button');
+                cloneButton.textContent = "Cloner";
+                cloneButton.style.marginTop = "10px";
+                cloneButton.onclick = async () => {
+                    const res = await fetch(API_URL, { // Appel de l'api avec une méthode POST pour ajouter du contenu
+                        method: 'POST', // Méthode post
+                        headers: { 'Content-Type': 'application/json' }, // Contenu en JSON
+                        body: JSON.stringify(card) // Envoie des informations de l'objet newCard
+                    });
+
+                    const savedCard = await res.json(); // Mise en objet de la nouvelle carte
+                    cards.push(savedCard); // Ajout de la nouvelle carte dans la liste cards
+                    renderCards(); // Appel de la fonction qui envoie cette carte dans le JSON
+                }
+                cardEl.appendChild(cloneButton);
 
                 if (card.progress === 100) {
                     completedContainer.appendChild(cardEl);
@@ -261,14 +279,15 @@
                 const ctx = document.getElementById('completedRadarChart').getContext('2d'); // On réccupère le canvas dans le contexte d'une modification en 2d
 
                 // Étape 1 : liste fixe de tous les types
-                const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight", "Lecture_erreurs"]; // Ajout de tous les types possibles pour les cartes
+                const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight", "Lecture_erreurs", "Risques"]; // Ajout de tous les types possibles pour les cartes
                 const counts = {
                     gold: 1,
                     vision: 1,
                     tempo: 1,
                     map_awareness: 1,
                     teamfight: 1,
-                    Lecture_erreurs: 1
+                    Lecture_erreurs: 1,
+                    Risques: 1
                 }; // Instanciation de tous les types à 0    
                 
                 // Étape 2 : compte les cartes complétées par type

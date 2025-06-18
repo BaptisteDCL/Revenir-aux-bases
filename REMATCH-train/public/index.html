@@ -74,8 +74,24 @@
     <body>
         <h1> REMATCH! - Cartes d'entrainement</h1>
         <div>
+
             <input type="text" id="title" placeholder="Titre">
+
             <textarea id="description" placeholder="description"></textarea>
+
+            <div class="form-group">
+                <label for="type">Type d'entrainement:</label>
+                <select id="type">
+                    <option value="Contrôle du ballon">Gold / min</option>
+                    <option value="vision">Vision</option>
+                    <option value="Tir">Tempo</option>
+                    <option value="Technique">Map Awareness</option>
+                    <option value="Passes">Teamfight</option>
+                    <option value="Game sens">Lecture des erreurs</option>
+                    <option value="Goal">Prise de risques</option>
+                </select>
+            </div>
+
             <button onclick="addCard()">Ajouter Carte</button>
         </div>
         <h2>Mes cartes</h2>
@@ -111,7 +127,8 @@
                 const cardEl = document.createElement('div'); // Créer un div
                 cardEl.className = "card"; // Ajouter comme nom de classe 'card'
                 cardEl.innerHTML = `<h3>${card.title}</h3>
-                <p>${card.description}</p>`; // Ajout de l'intérieur du div
+                <p>${card.description}</p>
+                <p>${card.type}</p>`; // Ajout de l'intérieur du div
                 container.appendChild(cardEl); // On ajoute la nouvelle carte au container
 
                 // Création du bouton de supression
@@ -160,6 +177,7 @@
         async function addCard() {
             const title = document.getElementById("title").value; // On récupère le titre
             const description = document.getElementById("description").value; // On récupère la description
+            const type = document.getElementById("type").value;
             // La carte est créée non terminée
             const finished = "false";
 
@@ -168,7 +186,7 @@
                 return;
             }
 
-            const newCard = {title, description, finished }; // Création d'un nouvel objet avec les valeurs des inputs
+            const newCard = {title, description, finished, type }; // Création d'un nouvel objet avec les valeurs des inputs
 
             const res = await fetch(API_URL, { // Appel de l'api avec la route de post pour ajouter une nouvelle carte
                 method: 'POST',

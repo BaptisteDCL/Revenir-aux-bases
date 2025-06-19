@@ -69,6 +69,14 @@
             .delete-btn:hover {
                 background: #dc2626;
             }
+            #completedRadarChart {
+                max-width: 400px;
+                max-height: 400px;
+                width: 100%;
+                height: auto;
+                margin: 40px auto;
+                display: block;
+            }
         </style>
     </head>
     <body>
@@ -82,13 +90,13 @@
             <div class="form-group">
                 <label for="type">Type d'entrainement:</label>
                 <select id="type">
-                    <option value="Contrôle du ballon">Contrôle du ballon</option>
+                    <option value="ball_controll">Contrôle du ballon</option>
                     <option value="vision">Vision</option>
-                    <option value="Tir">Tir</option>
-                    <option value="Technique">Technique</option>
-                    <option value="Passes">Passes</option>
-                    <option value="Game sens">Game sens</option>
-                    <option value="Goal">Goal</option>
+                    <option value="tir">Tir</option>
+                    <option value="technique">Technique</option>
+                    <option value="passes">Passes</option>
+                    <option value="game_sens">Game sens</option>
+                    <option value="goal">Goal</option>
                 </select>
             </div>
 
@@ -103,6 +111,9 @@
             <button onclick="addCard()">Ajouter Carte</button>
         </div>
 
+        <h2>Radar d'avancement</h2>
+        <canvas id="completedRadarChart" width="400" height="400"></canvas>
+
         <h2>Routines</h2>
         <div class="cardsContainer" id="routineContainer"></div>
 
@@ -111,8 +122,11 @@
 
         <h2>Cartes terminées</h2>
         <div class="cardsContainer" id="completedContainer"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
     <script>
+        const completedRadarChartInstance = null;
         const API_URL = 'http://localhost:3000/api/cards'; // adresse
         let cards = [];
 
@@ -190,6 +204,8 @@
                     routineContainer.appendChild(cardEl);
                 }
             });
+
+            drawCompletedRadarChart(); // Appel de la fonction pour mettre à jour le graphique
         }
 
         async function addCard() {
@@ -242,6 +258,75 @@
             }
         }
 
+        function drawCompletedRadarChart() {
+            if (completedRadarChartInstance){ // Si le radar est déjà créé, alors on le détruit
+                completedRadarChartInstance.destroy();
+            }
+
+            // Création d'une instance de radar
+            const ctx = document.getElementById('completedRadarChart').getContext("2d");
+
+            // Etape 1 : Création de la liste avec tous les types possibles
+            const allTypes = ["ball_controll", "vision", "tir", "technique", "passes", "game_sens", "goal"];
+            // Création du dictionnaire qui comptera toutes les cartes terminées par type, instanciation de tous les types à 1
+            const counts = {
+                ball_controll: 1,
+                vision: 1,
+                tir: 1,
+                technique: 1,
+                passes: 1,
+                game_sens: 1, 
+                goal: 1
+            }
+
+            // Pour chaque carte
+            cards.forEach(card =>{
+                // Si le type de la carte existe et que la carte est terminée
+                if (allTypes.includes(card.type) && card.finished === "true"){
+                    // Incrémentation du compte du type
+                    counts[card.type] ++;
+                }
+            });
+            
+            // Crée un dictionnaire qui associe le type à son nombre de carte terminée associée
+            const values = allTypes.map(type => counts[type]);
+
+            // Création du graphique radar
+            completedRadarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: allTypes,
+                    datasets: [
+                            {
+                            label: 'Cartes terminées par type',
+                            data: values,
+                            backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                            borderColor: '#22c55e',
+                            pointBackgroundColor: '#22c55e'
+                            },
+                            {
+                                label: 'Bronze',
+                                data: allTypes.map(() => 25),
+                                fill: false,
+                                borderColor: 'rgba(250, 204, 21, 0.7)', // jaune
+                                borderDash: [5, 5], // ligne pointillée
+                                pointBackgroundColor: 'rgba(250, 204, 21, 1)'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0 // Pas de décimales
+                                }
+                            }
+                        }
+                    }
+            }); 
+        }
         fetchCards();
     </script>
 </html>

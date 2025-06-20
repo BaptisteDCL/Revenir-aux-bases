@@ -113,7 +113,7 @@
             <div class="form-group">
                 <label for="type">Type :</label>
                 <select id="type">
-                    <option value="gold">Gold / min</option>
+                    <option value="plan">Plan de jeu / min</option>
                     <option value="vision">Vision</option>
                     <option value="tempo">Tempo</option>
                     <option value="map_awareness">Map Awareness</option>
@@ -254,7 +254,7 @@
                 document.getElementById('actuel').value = ''; // Remise à vide de l'input
                 document.getElementById('pousser').value = ''; // Remise à vide de l'input
                 document.getElementById('category').value = 'routine'; // ou '' si tu veux vraiment vider
-                document.getElementById('type').value = 'gold'; // ou ''
+                document.getElementById('type').value = 'plan'; // ou ''
             }
 
             async function deleteCard(index) {
@@ -279,9 +279,9 @@
                 const ctx = document.getElementById('completedRadarChart').getContext('2d'); // On réccupère le canvas dans le contexte d'une modification en 2d
 
                 // Étape 1 : liste fixe de tous les types
-                const allTypes = ["gold", "vision", "tempo", "map_awareness", "teamfight", "Lecture_erreurs", "Risques"]; // Ajout de tous les types possibles pour les cartes
+                const allTypes = ["plan", "vision", "tempo", "map_awareness", "teamfight", "Lecture_erreurs", "Risques"]; // Ajout de tous les types possibles pour les cartes
                 const counts = {
-                    gold: 1,
+                    plan: 1,
                     vision: 1,
                     tempo: 1,
                     map_awareness: 1,

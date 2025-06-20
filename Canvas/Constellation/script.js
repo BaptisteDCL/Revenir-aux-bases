@@ -8,7 +8,7 @@ console.log(ctx);
 class Particle {
     constructor(effect) {
         this.effect = effect;
-        this.radius = 15;
+        this.radius = Math.random() * 60 + 5;
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
     }

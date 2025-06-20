@@ -11,7 +11,8 @@ class Particle {
         this.radius = Math.random() * 60 + 5;
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
-        this.vx = 1;
+        this.vx = Math.random() * 4 - 2;
+        this.vy = Math.random() * 4 - 2;
     }
     draw(context){
         context.fillStyle = 'hsl(' + this.x * 0.5 + ', 100%, 50%)';
@@ -22,7 +23,9 @@ class Particle {
     }
     update(){
         this.x += this.vx;
+        this.y += this.vy;
         if (this.x > this.effect.width - this.radius || this.x < 0 + this.radius) this.vx *= -1;
+        if (this.y > this.effect.height - this.radius || this.y < 0 + this.radius) this.vy *= -1;
     }
 }
 

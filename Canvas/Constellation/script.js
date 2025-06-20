@@ -8,15 +8,16 @@ gradient.addColorStop(0, 'white');
 gradient.addColorStop(0.5, 'magenta');
 gradient.addColorStop(1, 'blue');
 ctx.fillStyle = gradient;
+ctx.strokeStyle = "white";
 
 class Particle {
     constructor(effect) {
         this.effect = effect;
-        this.radius = Math.random() * 60 + 5;
+        this.radius = Math.random() * 10 + 5;
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
-        this.vx = Math.random() * 4 - 2;
-        this.vy = Math.random() * 4 - 2;
+        this.vx = Math.random() * 1 - 0.5;
+        this.vy = Math.random() * 1 - 0.5;
     }
     draw(context){
         context.beginPath();
@@ -51,6 +52,23 @@ class Effect {
             particle.draw(context);
             particle.update();
         })
+        this.connectParticles(context);
+    }
+    connectParticles(context){
+        const maxDistance = 100;
+        for (let a = 0; a < this.particles.length; a++){
+            for (let b = a; b < this.particles.length; b++){
+                const dx = this.particles[a].x - this.particles[b].x;
+                const dy = this.particles[a].y - this.particles[b].y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < maxDistance){
+                    context.beginPath();
+                    context.moveTo(this.particles[a].x, this.particles[a].y);
+                    context.lineTo(this.particles[b].x, this.particles[b].y);
+                    context.stroke();
+                }
+            }
+        }
     }
 }
 const effect = new Effect(canvas);

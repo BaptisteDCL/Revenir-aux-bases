@@ -3,7 +3,11 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-console.log(ctx);
+const gradient = ctx.createLinearGradient(0,0,canvas.width, canvas.height);
+gradient.addColorStop(0, "white");
+gradient.addColorStop(0.5, "magenta");
+gradient.addColorStop(1, "blue");
+ctx.fillStyle = gradient;
 
 class Particle {
     constructor(effect) {

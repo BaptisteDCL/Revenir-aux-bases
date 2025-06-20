@@ -11,6 +11,7 @@ class Particle {
         this.radius = Math.random() * 60 + 5;
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+        this.vx = 1;
     }
     draw(context){
         context.fillStyle = 'hsl(' + this.x * 0.5 + ', 100%, 50%)';
@@ -20,7 +21,8 @@ class Particle {
         context.stroke();
     }
     update(){
-        this.x++;
+        this.x += this.vx;
+        if (this.x > this.effect.width - this.radius || this.x < 0 + this.radius) this.vx *= -1;
     }
 }
 
@@ -48,6 +50,7 @@ class Effect {
 const effect = new Effect(canvas);
 
 function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     effect.handleParticles(ctx);
     requestAnimationFrame(animate);
 }

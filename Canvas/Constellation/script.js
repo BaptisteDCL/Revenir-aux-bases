@@ -40,6 +40,7 @@ class Effect {
         this.height = this.canvas.height;
         this.particles = [];
         this.numberOfParticles = 200;
+        
         this.createParticles();
     }
     createParticles(){
@@ -48,11 +49,12 @@ class Effect {
         }
     }
     handleParticles(context){
+        this.connectParticles(context);
         this.particles.forEach(particle => {
             particle.draw(context);
             particle.update();
         })
-        this.connectParticles(context);
+        
     }
     connectParticles(context){
         const maxDistance = 100;
@@ -62,10 +64,14 @@ class Effect {
                 const dy = this.particles[a].y - this.particles[b].y;
                 const distance = Math.hypot(dx, dy);
                 if (distance < maxDistance){
+                    context.save();
+                    const opacity = 1 - (distance/maxDistance);
+                    context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(this.particles[a].x, this.particles[a].y);
                     context.lineTo(this.particles[b].x, this.particles[b].y);
                     context.stroke();
+                    context.restore();
                 }
             }
         }

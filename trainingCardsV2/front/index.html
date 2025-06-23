@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>REMATCH - Entraînement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      color: white;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+      width: 320px;
+      text-align: center;
+      transition: background 0.4s, transform 0.2s;
+      border: 2px solid #334155;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      border-color: #38bdf8;
+    }
+
+    .card.bronze {
+      background: #b08d57;
+      color: #0f172a;
+      border-color: #e2b465;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+
+    #points {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #0ea5e9;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="trainingCard">
+    <h2 id="title">Mini Objectif</h2>
+    <p id="description">Faire une game avec focus sur les trades niveau 1.</p>
+    <p>Points : <span id="points">0</span> / 25</p>
+    <button onclick="addPoint()">Ajouter un point</button>
+  </div>
+
+  <script>
+    let points = 0;
+    const pointsDisplay = document.getElementById('points');
+    const cardElement = document.getElementById('trainingCard');
+
+    function addPoint() {
+      points++;
+      pointsDisplay.textContent = points;
+
+      if (points >= 25) {
+        cardElement.classList.add('bronze');
+      }
+    }
+  </script>
+
+</body>
+</html>

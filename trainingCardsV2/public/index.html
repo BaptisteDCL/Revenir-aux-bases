@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>REMATCH - Entraînement</title>
+  <title>Entraînement jungle</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -78,26 +78,51 @@
 </head>
 <body>
 
-  <div class="card" id="trainingCard">
-    <h2 id="title">Mini Objectif</h2>
-    <p id="description">Faire une game avec focus sur les trades niveau 1.</p>
-    <p>Points : <span id="points">0</span> / 25</p>
-    <button onclick="addPoint()">Ajouter un point</button>
-  </div>
+  <div id="cards"></div>
 
   <script>
-    let points = 0;
-    const pointsDisplay = document.getElementById('points');
-    const cardElement = document.getElementById('trainingCard');
+    let cards = [];
+let niveau = 1;
 
-    function addPoint() {
-      points++;
-      pointsDisplay.textContent = points;
+async function fetchCards() {
+  const res = await fetch('/api/cards');
+  const data = await res.json();
+  cards = data.cards;
+  niveau = data.niveau;
+  renderCards();
+}
 
-      if (points >= 25) {
-        cardElement.classList.add('bronze');
-      }
-    }
+function renderCards() {
+  const container = document.getElementById('cards');
+  container.innerHTML = `<h2>Niveau ${niveau}</h2>`;
+
+  cards.forEach((card, index) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    if (card.points >= 25) div.classList.add('bronze');
+
+    div.innerHTML = `
+      <h3>${card.title}</h3>
+      <p>${card.description}</p>
+      <p>Points : ${card.points}</p>
+      <p>Rang : ${card.rang}</p>
+      <button onclick="addPoint(${index})">+1 Point</button>
+    `;
+
+    container.appendChild(div);
+    });
+  }
+
+  async function addPoint(index) {
+    await fetch(`/api/cards/${index}/points`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    fetchCards(); // Refresh l'état
+  }
+
+  fetchCards();
   </script>
 
 </body>

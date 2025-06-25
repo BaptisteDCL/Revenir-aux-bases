@@ -15,3 +15,7 @@ app.get("api/points", (req, res) =>{
     const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
     res.json(data);
 })
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

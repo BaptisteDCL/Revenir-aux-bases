@@ -12,13 +12,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+// Fonction permettant de calculer le niveau actuel du joueur par rapport aux cartes
 function calculNiveau(cards) {
   let niveau = 1;
   while (true) {
+    // On ne prend que les cartes qui sont du niveau actuel
     const cartesDuNiveau = cards.filter(c => c.niveau === niveau);
+    // Si il n'y a aucune carte au niveau actuel, alors on arrête la boucle
     if (cartesDuNiveau.length === 0) break;
+    // On vérifie que toutes les cartes du niveau actuel sont au minimum bronze
     const toutesBronze = cartesDuNiveau.every(c => c.points >= 25);
+    // Si ce n'est pas le cas alors on arrête
     if (!toutesBronze) break;
+    // Sinon on incrémente le niveau
     niveau++;
   }
   return niveau;

@@ -12,16 +12,31 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+function calculNiveau(cards) {
+  let niveau = 1;
+  while (true) {
+    const cartesDuNiveau = cards.filter(c => c.niveau === niveau);
+    if (cartesDuNiveau.length === 0) break;
+    const toutesBronze = cartesDuNiveau.every(c => c.points >= 25);
+    if (!toutesBronze) break;
+    niveau++;
+  }
+  return niveau;
+}
+
 // GET - Cartes du niveau actuel
 app.get('/api/cards', (req, res) => {
-  const cards = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-  const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf-8'));
+  fs.readFile('points.json', 'utf-8', (err, data) => {
+    if (err) return res.status(500).json({ error: "Erreur lecture fichier" });
 
-  const niveau = state.niveauClient;
-  const cardsDuNiveau = cards.filter(card => card.niveau === niveau);
+    let cards = JSON.parse(data);
 
-  res.json({ niveau, cards: cardsDuNiveau });
-});
+    // Calcul du niveau du joueur
+    const niveau = calculNiveau(cards); // Tu peux garder cette fonction simple
+
+    res.json({ cards, niveau });
+  });
+})
 
 // PUT - Ajouter un point à une carte
 app.put('/api/cards/:index/points', (req, res) => {

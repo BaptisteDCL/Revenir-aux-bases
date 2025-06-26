@@ -7,13 +7,37 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(to bottom right, #faf5ff, #e0f2fe, #e0e7ff);
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       padding: 2rem;
+      color: #1e293b;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      background: linear-gradient(to right, #8b5cf6, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #475569;
     }
 
     h1 {
@@ -88,6 +112,11 @@
   </style>
 </head>
 <body>
+
+  <div class="header">
+    <h1>Bienvenue sur ton entrainement personnalisé</h1>
+    <p>Accumule des points, progresse à ton rythme, et débloque de nouveaux défis à mesure que tu t’améliores.</p>
+  </div>
 
   <div id="cards"></div>
 

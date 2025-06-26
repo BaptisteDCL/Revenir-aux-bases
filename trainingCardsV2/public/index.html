@@ -92,51 +92,64 @@
   <div id="cards"></div>
 
   <script>
+    // On stocke ici les cartes qui devront être affichées
     let cards = [];
-let niveau = 1;
+    // Ici sera stocké en local le niveau actuel du client
+    let niveau = 1;
 
-async function fetchCards() {
-  const res = await fetch('/api/cards');
-  const data = await res.json();
-  cards = data.cards;
-  niveau = data.niveau;
-  renderCards();
-}
+    // On récuppère les cartes du serveur
+    async function fetchCards() {
+      // Appel de l'api GET
+      const res = await fetch('/api/cards');
+      // Conversion en JSON de la réponse
+      const data = await res.json();
+      // On met à jour les données locales
+      cards = data.cards;
+      niveau = data.niveau;
+      // On fait appel à la fonction qui va afficher les cartes
+      renderCards();
+    }
 
-function renderCards() {
-  const container = document.getElementById('cards');
-  container.innerHTML = '';
+    // Fonction pour afficher les cartes en front
+    function renderCards() {
+      // on récupère le conteneur de toutes les cartes
+      const container = document.getElementById('cards');
+      container.innerHTML = '';
 
-  cards
-    .filter(card => card.niveau <= niveau) // Voir toutes les cartes jusqu’au niveau actuel
-    .forEach((card, index) => {
-      const div = document.createElement('div');
-      div.className = 'card';
-      if (card.points >= 25) div.classList.add('bronze');
+      cards
+      // On ne garde que les cartes dont le niveau est égal au niveau actuel
+        .filter(card => card.niveau <= niveau)
+        // Pour chacune de ces cartes nous allons créer un div qui affichera toutes les informations nécessaires
+        .forEach((card, index) => {
+          const div = document.createElement('div');
+          div.className = 'card';
+          if (card.points >= 25) div.classList.add('bronze');
 
-      div.innerHTML = `
-        <h3>${card.title}</h3>
-        <p>${card.description}</p>
-        <p><strong>Points :</strong> ${card.points}</p>
-        <p><strong>Rang :</strong> ${card.rang}</p>
-        <p><strong>Niveau :</strong> ${card.niveau}</p>
-        <button onclick="addPoint(${index})">+1 Point</button>
-      `;
+          div.innerHTML = `
+            <h3>${card.title}</h3>
+            <p>${card.description}</p>
+            <p><strong>Points :</strong> ${card.points}</p>
+            <p><strong>Rang :</strong> ${card.rang}</p>
+            <p><strong>Niveau :</strong> ${card.niveau}</p>
+            <button onclick="addPoint(${index})">+1 Point</button>
+          `;
+          // On ajoute à ce conteneur les cartes créées
+          container.appendChild(div);
+        });
+    }
+    // Fonction permettant d'ajouter des points
+    async function addPoint(index) {
+      // On attend le retour de la demande PUT
+      await fetch(`/api/cards/${index}/points`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-      container.appendChild(div);
-    });
-}
+      // On refait l'appel des fonctions de mise à jour des cartes
+      fetchCards();
+    }
 
-  async function addPoint(index) {
-    await fetch(`/api/cards/${index}/points`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    fetchCards(); // Refresh l'état
-  }
-
-  fetchCards();
+    fetchCards();
   </script>
 
 </body>

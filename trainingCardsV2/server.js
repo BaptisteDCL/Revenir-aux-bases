@@ -32,32 +32,36 @@ function calculNiveau(cards) {
 
 // GET - Cartes du niveau actuel
 app.get('/api/cards', (req, res) => {
+  // On lit le JSON
   fs.readFile('points.json', 'utf-8', (err, data) => {
     if (err) return res.status(500).json({ error: "Erreur lecture fichier" });
 
     let cards = JSON.parse(data);
 
-    // Calcul du niveau du joueur
-    const niveau = calculNiveau(cards); // Tu peux garder cette fonction simple
-
+    // Calcul du niveau du joueur via la fonction juste au dessus
+    const niveau = calculNiveau(cards);
+    // on met dans le résultat les cartes ainsi que le niveau accompli
     res.json({ cards, niveau });
   });
 })
 
 // PUT - Ajouter un point à une carte
 app.put('/api/cards/:index/points', (req, res) => {
+  // On récupère les JSON des cartes et du niveau du client
   const cards = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
   const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf-8'));
 
+  // On récupère l'index envoyé par le coté client
   const index = parseInt(req.params.index);
   if (isNaN(index)) return res.status(400).json({ error: "Index invalide" });
-
+  // On réccupère toutes les cartes qui correspondent au niveau de l'utilisateur
   const cardsDuNiveau = cards.filter(card => card.niveau === state.niveauClient);
-
+  // La carte a modifier est la carte correspondant à l'index de la demande PUT
   const cardToUpdate = cardsDuNiveau[index];
   if (!cardToUpdate) return res.status(404).json({ error: "Carte non trouvée" });
-
+  // On rajoute un point aux cartes modifiées
   cardToUpdate.points += 1;
+  // Si le nombre de point dépasse le seuil, alors on passe au niveau Bronze
   if (cardToUpdate.points >= 25) {
     cardToUpdate.rang = "Bronze";
   }

@@ -61,47 +61,66 @@
     }
 
     .card {
-      background: #1e293b;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      width: 280px;
-      transition: transform 0.2s ease;
-      position: relative;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
     }
 
-    .card.bronze {
-      border: 2px solid #cd7f32;
-      background: linear-gradient(145deg, #2e1f15, #3a2818);
+    .icon {
+      font-size: 2rem;
+      background: linear-gradient(to right, #a78bfa, #60a5fa);
+      color: white;
+      padding: 1rem;
+      border-radius: 50%;
+      display: inline-block;
+      margin-bottom: 1rem;
     }
 
-    .card h3 {
-      margin-top: 0;
-      color: #e0f2fe;
+    .card-title {
+      font-size: 1.5rem;
+      background: linear-gradient(to right, #8b5cf6, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
     }
 
-    .card p {
-      margin: 0.3rem 0;
+    .card-description {
+      font-size: 1rem;
+      color: #475569;
+      margin-bottom: 1rem;
     }
 
-    .card button {
-      background-color: #38bdf8;
-      color: #0f172a;
+    .points-display {
+      font-size: 1.25rem;
+      margin: 1rem 0;
+      color: #1e40af;
+    }
+
+    button {
+      background: linear-gradient(to right, #8b5cf6, #3b82f6);
+      color: white;
       border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 1rem;
-      transition: background 0.2s;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    .card button:hover {
-      background-color: #0ea5e9;
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(to right, #7c3aed, #2563eb);
     }
 
     @media (max-width: 600px) {
@@ -155,12 +174,11 @@
           if (card.points >= 25) div.classList.add('bronze');
 
           div.innerHTML = `
-            <h3>${card.title}</h3>
-            <p>${card.description}</p>
-            <p><strong>Points :</strong> ${card.points}</p>
-            <p><strong>Rang :</strong> ${card.rang}</p>
-            <p><strong>Niveau :</strong> ${card.niveau}</p>
-            <button onclick="addPoint(${index})">+1 Point</button>
+            <div class="icon">⌛</div>
+            <h2 class="card-title">${card.title}</h2>
+            <p class="card-description">${card.description}</p>
+            <div class="points-display">Points : <span id="points-${index}">${card.points}</span></div>
+            <button onclick="addPoint(${index})">Ajouter un point</button>
           `;
           // On ajoute à ce conteneur les cartes créées
           container.appendChild(div);

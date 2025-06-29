@@ -11,5 +11,22 @@
         </div>
 
         <div id="card"></div>
+
+        <script>
+            // Ici nous allons stocker toutes les cartes réccupérées
+            let cards = [];
+            let niveau = 1;
+
+            async function retrieveCards() {
+                // Appel de la route get pour les cartes
+                const res = await fetch('api/cards');
+                // Mise en json des données
+                const data = await res.json();
+
+                cards = data.cards;
+                niveau = data.niveau;
+                renderCards();
+            }
+        </script>
     </body>
 </html>

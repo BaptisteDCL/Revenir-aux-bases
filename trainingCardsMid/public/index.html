@@ -10,7 +10,7 @@
             <p>Accumule des points, progresse à ton rythme, et débloque de nouveaux défis à mesure que tu t’améliores.</p>
         </div>
 
-        <div id="card"></div>
+        <div id="cards"></div>
 
         <script>
             // Ici nous allons stocker toutes les cartes réccupérées
@@ -26,6 +26,38 @@
                 cards = data.cards;
                 niveau = data.niveau;
                 renderCards();
+            }
+
+            async function renderCards() {
+                const container = document.getElementById("cards");
+                container.innerHTML = "";
+
+                cards.forEach((card, index) =>{
+                    // Créer un div
+                    const div = document.createElement("div");
+                    // Ajout d'un nom de classe
+                    div.className ="card";
+                    if (card.points >= 25) div.classList.add("bronze");
+                    div.innerHTML = `
+                        <div class="icon">⌛</div>
+                        <h2 class="card-title">${card.title}</h2>
+                        <p class="card-description">${card.description}</p>
+                        <p class="card-description">Faites ceci ${niveau} fois par partie</p>
+                        <div class="points-display">Points : <span id="points-${index}">${card.points}</span></div>
+                        <button onclick="addPoint(${index})">Ajouter un point</button>
+                    `;
+                    // On ajoute au conteneur la nouvelle carte créée
+                    container.appendChild(div);
+                });
+            }
+
+            async function addPoint(index) {
+                await fetch(`api/cards/${index}/points`, {
+                    method: "PUT",
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                // On reccupere les nouvelles données des cartes
+                retrieveCards();
             }
         </script>
     </body>

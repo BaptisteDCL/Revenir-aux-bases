@@ -41,7 +41,7 @@ app.put("api/cards/:index/points", (req, res) => {
     // On récupère l'index envoyé par le coté client
     const index = parseInt(req.params.index);
     if (isNaN(index)) return res.status(400).json({message :  "L'index n'existe pas"});
-    const cardsDuNiveau = cards.filter(card => card.niveau == niveau);
+    const cardsDuNiveau = cards.filter(card => card.niveau == state.niveau);
     const cardToUpdate = cardsDuNiveau[index];
     if (!cardToUpdate) return res.status(404).json({ error: "Carte non trouvée" });
     cardToUpdate.points += 1;
@@ -49,6 +49,19 @@ app.put("api/cards/:index/points", (req, res) => {
     if (cardToUpdate.points >= 25) {
         cardToUpdate.rang = "Bronze";
     }
+
+    // Met à jour la vraie carte dans la liste complète
+    const cartesDuNiveauMAJ = cards.findIndex(c => c.title === cardToUpdate.title);
+    // Booleen pour savoir si toutes les cartes sont bronze
+    const toutesBronze = cartesDuNiveauMAJ.every(c => c.points >= 25);
+    // Si le booleen est vrai alors
+    if (toutesBronze) {
+        // On augmente le status du client
+        state.niveauClient++;
+        // On écrit les modifications dans le JSOn
+        fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+    }
+
 })
 
 app.listen(PORT, () =>{

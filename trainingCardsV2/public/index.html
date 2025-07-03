@@ -128,6 +128,32 @@
         width: 90%;
       }
     }
+
+    .progress-container {
+      margin-top: 1rem;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 16px;
+      background-color: #e5e7eb; /* gris clair */
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, #6366f1, #3b82f6);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-top: 4px;
+      text-align: center;
+    }
+
   </style>
 </head>
 <body>
@@ -178,7 +204,12 @@
             <h2 class="card-title">${card.title}</h2>
             <p class="card-description">${card.description}</p>
             <p class="card-description">Faites ceci ${niveau} fois par partie</p>
-            <div class="points-display">Points : <span id="points-${index}">${card.points}</span></div>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-${index}" style="width: ${(card.points / 25) * 100}%"></div>
+              </div>
+              <div class="progress-text"><span id="points-${index}">${card.points}</span> / 25</div>
+            </div>
             <button onclick="addPoint(${index})">Ajouter un point</button>
           `;
           // On ajoute à ce conteneur les cartes créées
@@ -187,6 +218,12 @@
     }
     // Fonction permettant d'ajouter des points
     async function addPoint(index) {
+      cards[index].points++;
+      document.getElementById(`points-${index}`).textContent = cards[index].points;
+
+      const progressPercent = Math.min((cards[index].points / 25) * 100, 100);
+      document.getElementById(`progress-${index}`).style.width = `${progressPercent}%`;
+
       // On attend le retour de la demande PUT
       await fetch(`/api/cards/${index}/points`, {
         method: 'PUT',

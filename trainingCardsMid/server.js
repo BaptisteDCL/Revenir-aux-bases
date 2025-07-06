@@ -11,27 +11,24 @@ const STATE_FILE = path.join(__dirname, 'state.json');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
 // Route du port pour réccupérer les données JSON
-app.get("api/cards", (req, res) =>{
-    let cards;
-    let niveau;
-    // Lecture du json des cartes
-    fs.readFile("points.json", "utf-8", (err, data) => {
-        if (err) return res.status(500).json({ message: "Erreur lors de la lecture du fichier des cartes"});
-        cards = JSON.parse(data);
-    });
+app.get("/api/cards", async (req, res) => {
+    try {
+        const cardsData = await fs.readFile("points.json", "utf-8");
+        const niveauData = await fs.readFile("niveau.json", "utf-8");
 
-    // Lecture du json du niveau client
-    fs.readFile("niveau.json", "utf-8", (err, data) =>{
-        if (err) return res.status(500).json({message : "Erreur lors de la lecture du niveau du client"});
-        niveau = JSON.parse(data);
-    });
+        const cards = JSON.parse(cardsData);
+        const niveau = JSON.parse(niveauData);
 
-    cards = cards.filter(c => c.niveau === niveau);
-    // On renvoie le json contenant toutes les informations cartes + niveau
-    res.json({cards, niveau});
-})
+        const filteredCards = cards.filter(c => c.niveau <= niveau); // on montre aussi les niveaux inférieurs
+        res.json({ cards: filteredCards, niveau });
+
+    } catch (err) {
+        res.status(500).json({ message: "Erreur lors de la lecture des fichiers", error: err.message });
+    }
+});
 
 app.put("api/cards/:index/points", (req, res) => {
     // On prends les données contenues dans les JSON
@@ -62,7 +59,7 @@ app.put("api/cards/:index/points", (req, res) => {
         fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
     }
 
-})
+});
 
 app.listen(PORT, () =>{
     console.log(`Serveur lancé sur http://localhost:${PORT}`);

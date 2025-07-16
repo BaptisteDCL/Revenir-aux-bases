@@ -3,6 +3,11 @@
     src: url('https://fonts.google.com/specimen/Montserrat');
 }
 
+@font-face {
+    font-family: Fraunces;
+    src: url(https://fonts.google.com/specimen/Fraunces);
+}
+
 body{
     display: flex;
     background-color: #F2EAE2;
@@ -30,5 +35,17 @@ body{
     font-size: small;
     letter-spacing: 0.2em;
     text-transform: capitalize;
-    font-weight: lighter;
+    font-weight: 500;
+}
+
+h1{
+    font-family: Fraunces;
+    color: #1C232B;
+    font-weight: bolder;
+}
+
+p{
+    color: #6C7289;
+    font-family: Montserrat;
+    font-weight: 500;
 }

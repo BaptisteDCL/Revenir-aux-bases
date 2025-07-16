@@ -6,9 +6,15 @@ body{
 
 .container{
     display: flex;
+    width: 600px;
+    background-color: white;
 }
 
 .desktopImage{
-    max-width: 600px;
+    max-width: 300px;
     max-height: 611px;
+}
+
+#content{
+    padding: 1em;
 }

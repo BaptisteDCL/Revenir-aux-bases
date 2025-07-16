@@ -1,3 +1,14 @@
 body{
+    display: flex;
     background-color: #F2EAE2;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+}
+
+.desktopImage{
+    max-width: 600px;
+    max-height: 611px;
 }

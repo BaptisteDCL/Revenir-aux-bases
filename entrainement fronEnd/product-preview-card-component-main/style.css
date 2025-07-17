@@ -21,11 +21,14 @@ body{
     display: flex;
     width: 600px;
     background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .desktopImage{
     max-width: 300px;
     max-height: 611px;
+    height: 100%;
 }
 
 #content{
@@ -51,4 +54,18 @@ p{
     color: #6C7289;
     font-family: Montserrat;
     font-weight: 500;
+}
+
+#price{
+    color: #3D8168;
+}
+
+#priceContainer{
+    display: flex;
+    align-items: center;
+}
+
+#oldPrice{
+    text-decoration-line: line-through;
+    margin-left: 2em;
 }

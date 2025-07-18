@@ -77,11 +77,21 @@ p{
     border-radius: 10px;
     background-color: #3D8168;
     border: none;
-    color: #FFFFFF;
     font-weight: 600;
     font-family: Montserrat;
+    justify-content: center;
+    gap: 0.5em;
+    cursor: pointer;
 }
 
-button{
-    
+#buttonContainer:hover{
+    background-color: #1A4032;
+}
+#cartIcon{
+    height: 1.5em;
+    margin: 0.75em 0em;    
+}
+
+#cart{
+    color: #FFFFFF;
 }

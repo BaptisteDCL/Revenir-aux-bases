@@ -1,83 +1,434 @@
 [
   {
-    "title": "Full Clear",
-    "description": "Faire un full clear et reset le plus rapidement possible",
-    "actuel": "3:25",
-    "pousser": "3:24",
-    "category": "routine",
+    "title": "GAME Prioriser la tempo",
+    "description": "Ressentir qu'à une action, j'ai une intention",
+    "actuel": "0 par game",
+    "pousser": "1 par game",
+    "category": "challenge",
     "type": "tempo",
     "progress": 100
   },
   {
-    "title": "Economie de tempo",
-    "description": "A chaque action, il faut avoir un revenu sinon c'est gâché",
-    "actuel": "Ne sais pas encore comment compter ce genre de play",
-    "pousser": "le plus souvent possible",
+    "title": "GAME Prioriser la tempo",
+    "description": "Ressentir qu'à une action, j'ai une intention",
+    "actuel": "0 par game",
+    "pousser": "1 par game",
     "category": "routine",
+    "type": "gold",
+    "progress": 100
+  },
+  {
+    "title": "GAME Prioriser la tempo",
+    "description": "Ressentir qu'à une action, j'ai une intention",
+    "actuel": "0 par game",
+    "pousser": "1 par game",
+    "category": "challenge",
     "type": "tempo",
-    "progress": 20
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Testing limit move agressif",
+    "description": "Essayer de faire un move totalement risqué (Aller dans la jungle etc)",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Aller invade la jungle adverse",
+    "description": "null",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Occasion en or",
+    "description": "Si j'ai une occasion facile de prendre un avantage, pourquoi ne pas la prendre ?",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "map_awareness",
+    "progress": 100
+  },
+  {
+    "title": "testing limit",
+    "description": "move agressif",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreur dernière game",
+    "description": "Review la game et trouver une erreur",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
   },
   {
     "title": "Prendre des risques",
-    "description": "Continuellement essayer de prendre des risques \"contrôlés\" sur la carte",
-    "actuel": "null",
-    "pousser": "null",
-    "category": "routine",
-    "type": "map_awareness",
-    "progress": 25
-  },
-  {
-    "title": "Ne pas faire de gank mauvais",
-    "description": "Si le laner adverse est trop avancé MAIS qu'on ne sait pas où est le jungler adverse et que mon laner est trop low hp = PAS DE GANK",
-    "actuel": "null",
-    "pousser": "null",
-    "category": "routine",
-    "type": "map_awareness",
-    "progress": 15
-  },
-  {
-    "title": "Prendre des risques (5 games)",
-    "description": "Essayer de prendre des décisions avec des risques \"contrôlés\" de manière consciente",
+    "description": "prise de risque pour les décisions prises (Pourquoi avoir peur de prendre des risques ??) +5",
     "actuel": "0",
     "pousser": "1",
     "category": "challenge",
-    "type": "map_awareness",
+    "type": "Risques",
     "progress": 100
   },
   {
-    "title": "Ne pas faire de mauvais ganks",
-    "description": "Reconnaître des ganks qui sont mauvais (pas de vision jungler et état de la lane)",
-    "actuel": "0",
-    "pousser": "20",
-    "category": "challenge",
-    "type": "map_awareness",
-    "progress": 10
-  },
-  {
-    "title": "Prendre des risques (5 games)",
-    "description": "Essayer de prendre des décisions avec des risques \"contrôlés\" de manière consciente",
-    "actuel": "1",
-    "pousser": "2",
-    "category": "challenge",
-    "type": "map_awareness",
-    "progress": 5
-  },
-  {
-    "title": "Trouver des games où je prends des mauvaises décisions",
-    "description": "Review chaque game et trouver un play qui a été mauvais de ma part avec des analyses",
+    "title": "Prendre des risques",
+    "description": "prise de risque pour les décisions prises (Pourquoi avoir peur de prendre des risques ??) +5",
     "actuel": "0",
     "pousser": "1",
     "category": "challenge",
-    "type": "map_awareness",
-    "progress": 50
+    "type": "Risques",
+    "progress": 100
   },
   {
-    "title": "Economie de tempo",
-    "description": "Faire 3 actions de suite sans perdre de tempo",
-    "actuel": "1",
-    "pousser": "3",
+    "title": "Prendre des risques",
+    "description": "prise de risque pour les décisions prises (Pourquoi avoir peur de prendre des risques ??) +5",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Prendre des risques",
+    "description": "prise de risque pour les décisions prises (Pourquoi avoir peur de prendre des risques ??) +5",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Prendre des risques",
+    "description": "prise de risque pour les décisions prises (Pourquoi avoir peur de prendre des risques ??) +5",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Prendre des risques",
+    "description": "prise de risque pour les décisions prises (Pourquoi avoir peur de prendre des risques ??) +5",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "Risques",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Plan de jeu pour premier drake",
+    "description": "Etablir un plan de jeu pour le premier drake",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "challenge",
+    "type": "plan",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreurs de gameplay",
+    "description": "t'as capté",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 100
+  },
+  {
+    "title": "Trouver erreurs de gameplay",
+    "description": "t'as capté",
+    "actuel": "0",
+    "pousser": "1",
+    "category": "routine",
+    "type": "Lecture_erreurs",
+    "progress": 0
+  },
+  {
+    "title": "GAME Prioriser la tempo",
+    "description": "Ressentir qu'à une action, j'ai une intention",
+    "actuel": "0 par game",
+    "pousser": "1 par game",
     "category": "challenge",
     "type": "tempo",
-    "progress": 0
+    "progress": 100
+  },
+  {
+    "title": "GAME Prioriser la tempo",
+    "description": "Ressentir qu'à une action, j'ai une intention",
+    "actuel": "0 par game",
+    "pousser": "1 par game",
+    "category": "challenge",
+    "type": "tempo",
+    "progress": 100
   }
 ]

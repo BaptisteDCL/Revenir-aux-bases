@@ -1,14 +1,21 @@
 body{
     height: 100vh;
     background-color: dodgerblue;
+    display: flex;
+    justify-content: center;
 }
+
+.attribution{
+    display: none;
+}
+
 #grid{
     display: grid;
-    row-gap: 1em;
-    column-gap: 1em;
-    padding: 10px;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 16% 16% 16% 16% 16% 16%;
+    row-gap: 0.5em;
+    column-gap: 0.5em;
+    padding: 0;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
     height: 90%;
     width: 90%;
     background-color: orange;

@@ -7,9 +7,18 @@ body{
     column-gap: 1em;
     background-color: dodgerblue;
     padding: 10px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+    height: 100%;
+}
+
+#grid > div{
+    background-color: red;
 }
 
 #Schedule{
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
 }

@@ -7,7 +7,7 @@ body{
     row-gap: 1em;
     column-gap: 1em;
     padding: 10px;
-    grid-template-columns: 16% 16% 16% 16% 16% 16%;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 16% 16% 16% 16% 16% 16%;
     height: 90%;
     width: 90%;
@@ -19,31 +19,29 @@ body{
 }
 
 #Schedule{
-    grid-column: 1 / 2;
-    grid-row: 1 / 4;
+    grid-area: 1 / 1 / 4 / 2;
 }
 
 #ratingContainer{
-    grid-column: 2 / 5;
-    grid-row: 1 / 3;
+    grid-area: 1 / 2 / 3 / 4;
 }
 
 #Ia{
-    grid-column: 1 / 2;
-    grid-row: 4 / 7;
+    grid-area: 4 / 1 / 7 / 2;
 }
 
 #Social{
-    grid-column: 5 / 6;
-    grid-row: 1 / 5;
+    grid-area: 1 / 4 / 5 / 5;
 }
 
 #Manage{
-    grid-column: 2 / 4;
-    grid-row: 3 / 7;
+    grid-area: 3 / 2 / 7 / 3;
 }
 
 #Maintain{
-    grid-column: 4 / 5;
-    grid-row: 3 / 4;
+    grid-area: 3 / 3 / 5 / 4;
+}
+
+#Grow{
+    grid-area: 5 / 3 / 7 / 5;
 }

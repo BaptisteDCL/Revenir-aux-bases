@@ -1,4 +1,18 @@
 
+@font-face {
+  font-family: 'DMSans';
+  src: url('./assets/fonts/static/DMSans-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1{
+    font-family: 'DMSans';
+    font-weight: 500;
+    font-size: xx-large;
+    max-width: 250px;
+}
+
 body{
     height: 100vh;
     background-color: dodgerblue;
@@ -19,7 +33,6 @@ body{
     grid-template-rows: auto auto auto auto auto auto;
     height: 90%;
     width: 90%;
-    background-color: orange;
 }
 
 #grid > div{
